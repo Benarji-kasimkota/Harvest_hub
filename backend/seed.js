@@ -1,0 +1,34 @@
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const Product = require('./models/Product');
+
+dotenv.config();
+
+const products = [
+  { name: 'Fresh Broccoli', description: 'Crisp, farm-fresh broccoli packed with vitamins C and K. Perfect for stir-fries, soups, and salads. Harvested daily from our organic partner farms.', price: 2.99, category: 'vegetables', image: 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=500&q=80', stock: 100, unit: 'kg', farmer: 'Green Valley Farm', featured: true, rating: 4.8 },
+  { name: 'Organic Tomatoes', description: 'Sun-ripened organic tomatoes bursting with flavor. No pesticides, no GMOs. Grown with love in nutrient-rich soil by local farmers.', price: 3.49, category: 'vegetables', image: 'https://images.unsplash.com/photo-1546470427-e26264be0b0d?w=500&q=80', stock: 80, unit: 'kg', farmer: 'Sunrise Organics', featured: true, rating: 4.9 },
+  { name: 'Sweet Carrots', description: 'Naturally sweet, crunchy carrots freshly pulled from the earth. Rich in beta-carotene and perfect for snacking, cooking, or juicing.', price: 1.99, category: 'vegetables', image: 'https://images.unsplash.com/photo-1445282768818-728615cc910a?w=500&q=80', stock: 150, unit: 'kg', farmer: 'Root & Soil Farm', featured: false, rating: 4.6 },
+  { name: 'Baby Spinach', description: 'Tender baby spinach leaves, washed and ready to eat. Packed with iron, folate, and antioxidants. Perfect for salads and smoothies.', price: 2.49, category: 'vegetables', image: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&q=80', stock: 60, unit: 'bunch', farmer: 'Green Valley Farm', featured: true, rating: 4.7 },
+  { name: 'Bell Peppers Mix', description: 'Vibrant mix of red, yellow, and green bell peppers. Sweet, crunchy and loaded with vitamin C. Ideal for salads, stir-fries and stuffing.', price: 4.49, category: 'vegetables', image: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80', stock: 90, unit: 'kg', farmer: 'Colorful Acres', featured: true, rating: 4.8 },
+  { name: 'Red Apples', description: 'Crisp and sweet red apples from high-altitude mountain orchards. Hand-picked at peak ripeness for maximum flavor and nutrition.', price: 4.99, category: 'fruits', image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&q=80', stock: 200, unit: 'kg', farmer: 'Mountain Orchards', featured: true, rating: 4.9 },
+  { name: 'Ripe Bananas', description: 'Naturally ripened yellow bananas, energy-packed and delicious. Rich in potassium and perfect for breakfast, smoothies, or baking.', price: 1.49, category: 'fruits', image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&q=80', stock: 120, unit: 'bunch', farmer: 'Tropical Farms', featured: false, rating: 4.5 },
+  { name: 'Fresh Strawberries', description: 'Plump, juicy strawberries picked at peak ripeness. Irresistibly sweet with a hint of tartness. Perfect fresh, in desserts, or with cream.', price: 5.99, category: 'fruits', image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&q=80', stock: 50, unit: 'punnet', farmer: 'Berry Best Farm', featured: true, rating: 4.9 },
+  { name: 'Mangoes', description: 'Luscious, golden mangoes at the perfect stage of ripeness. Intensely sweet tropical flavor, rich in vitamins A and C.', price: 6.99, category: 'fruits', image: 'https://images.unsplash.com/photo-1605027990121-cbae9e0642df?w=500&q=80', stock: 70, unit: 'kg', farmer: 'Tropical Farms', featured: true, rating: 4.8 },
+  { name: 'Free Range Chicken Breast', description: 'Premium free-range chicken breast, hormone-free and antibiotic-free. Lean, tender and perfect for grilling, baking, or pan-frying.', price: 8.99, category: 'meat', image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80', stock: 40, unit: 'kg', farmer: 'Happy Hen Farm', featured: true, rating: 4.8 },
+  { name: 'Grass-Fed Beef Mince', description: 'Premium grass-fed ground beef, extra lean with rich natural flavor. No fillers, no additives. Perfect for burgers, bolognese, and meatballs.', price: 12.99, category: 'meat', image: 'https://images.unsplash.com/photo-1588347818481-05b9c9e44370?w=500&q=80', stock: 30, unit: 'kg', farmer: 'Grassland Beef Co', featured: false, rating: 4.7 },
+  { name: 'Lamb Chops', description: 'Tender, succulent lamb chops from free-range pasture-raised sheep. Rich flavor, perfect for grilling or pan-searing with herbs and garlic.', price: 15.99, category: 'meat', image: 'https://images.unsplash.com/photo-1529693662653-9d480da3dc47?w=500&q=80', stock: 25, unit: 'kg', farmer: 'Green Pastures', featured: true, rating: 4.9 },
+  { name: 'Full Cream Milk', description: 'Fresh full cream milk from pasture-raised, grass-fed cows. Rich, creamy taste with no additives. Pasteurized and bottled fresh daily.', price: 3.99, category: 'dairy', image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80', stock: 100, unit: 'litre', farmer: 'Meadow Fresh Dairy', featured: true, rating: 4.7 },
+  { name: 'Greek Yogurt', description: 'Thick, creamy Greek-style yogurt made from whole milk. Strained for extra richness, packed with protein and live probiotic cultures.', price: 4.49, category: 'dairy', image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&q=80', stock: 70, unit: 'tub', farmer: 'Meadow Fresh Dairy', featured: false, rating: 4.6 },
+  { name: 'Aged Cheddar Cheese', description: 'Artisan-aged cheddar with a sharp, complex flavor profile. Made from raw whole milk and aged for 12 months for maximum depth of taste.', price: 6.99, category: 'dairy', image: 'https://images.unsplash.com/photo-1618164436241-4473940d1f5c?w=500&q=80', stock: 45, unit: 'block', farmer: 'Artisan Cheese Co', featured: true, rating: 4.8 },
+  { name: 'Basmati Rice', description: 'Premium extra-long grain basmati rice with a delicate floral aroma. Aged for 2 years for extra fluffiness. Perfect with curries and biryanis.', price: 5.99, category: 'grains', image: 'https://images.unsplash.com/photo-1536304993881-ff86e0c9e14e?w=500&q=80', stock: 200, unit: 'kg', farmer: 'Golden Fields', featured: false, rating: 4.6 },
+  { name: 'Whole Wheat Flour', description: 'Stone-ground whole wheat flour retaining all the bran and germ for maximum nutrition. High in fiber, perfect for breads, rotis, and baking.', price: 3.49, category: 'grains', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80', stock: 150, unit: 'kg', farmer: 'Mill & Stone Farm', featured: false, rating: 4.5 },
+];
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(async () => {
+    await Product.deleteMany({});
+    await Product.insertMany(products);
+    console.log('✅ Database seeded with', products.length, 'products!');
+    process.exit();
+  })
+  .catch(err => { console.error(err); process.exit(1); });

@@ -1,0 +1,22 @@
+.orders-page { padding: 40px 20px; }
+.orders-page h1 { font-size: 2rem; margin-bottom: 32px; }
+
+.order-card { padding: 24px; margin-bottom: 20px; }
+
+.order-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+
+.order-id { font-weight: 700; font-size: 1rem; }
+.order-date { color: var(--gray); font-size: 0.9rem; margin-top: 4px; }
+
+.order-badges { display: flex; gap: 8px; }
+
+.order-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 0; border-bottom: 1px solid #f0f0f0;
+}
+
+.order-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
+.order-item span:nth-child(2) { flex: 1; }
+.order-item span:last-child { font-weight: 600; }
+
+.order-total { text-align: right; margin-top: 16px; font-size: 1.1rem; }
