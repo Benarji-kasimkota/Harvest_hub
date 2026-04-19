@@ -2,7 +2,16 @@
   "name": "HarvestHub",
   "forwardPorts": [3000, 5000],
   "portsAttributes": {
-    "3000": { "label": "Frontend", "onAutoForward": "openBrowserOnce", "visibility": "public" },
-    "5000": { "label": "Backend API", "onAutoForward": "silent", "visibility": "public" }
-  }
+    "3000": {
+      "label": "Frontend",
+      "onAutoForward": "openBrowserOnce",
+      "visibility": "public"
+    },
+    "5000": {
+      "label": "Backend API",
+      "onAutoForward": "silent",
+      "visibility": "public"
+    }
+  },
+  "postStartCommand": "gh codespace ports visibility 5000:public -c $CODESPACE_NAME 2>/dev/null || true"
 }
