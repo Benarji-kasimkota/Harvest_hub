@@ -1,0 +1,66 @@
+.delivery-ai-tools { padding: 0; }
+.delivery-ai-tools h2 { margin: 0 0 1.5rem; }
+
+.dai-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+.dai-tabs button { padding: 8px 20px; border: 2px solid #e2e8f0; border-radius: 8px; background: white; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+.dai-tabs button.active { border-color: #2d6a4f; background: #2d6a4f; color: white; }
+
+.delivery-ai-section { background: white; border-radius: 16px; padding: 24px; border: 1px solid #e2e8f0; }
+.delivery-ai-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; gap: 1rem; }
+.delivery-ai-header h3 { margin: 0 0 4px; }
+.delivery-ai-header p { margin: 0; color: #666; font-size: 0.9rem; }
+
+.btn-ai-delivery { background: #2d6a4f; color: white; border: none; border-radius: 10px; padding: 10px 20px; cursor: pointer; font-size: 0.9rem; white-space: nowrap; transition: background 0.2s; }
+.btn-ai-delivery:hover { background: #1b4332; }
+.btn-ai-delivery:disabled { background: #b7d9c4; cursor: not-allowed; }
+
+.dai-empty { text-align: center; padding: 2rem; color: #888; background: #f8fdf8; border-radius: 12px; }
+
+.route-hint { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
+.route-order-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+.route-order-card { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.route-order-card:hover { border-color: #52b788; }
+.route-order-card.selected { border-color: #2d6a4f; background: #f0f7f4; }
+.route-order-info { flex: 1; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 0.9rem; }
+.route-address { color: #666; font-size: 0.8rem; }
+.status-badge-sm { font-size: 0.75rem; padding: 2px 8px; border-radius: 20px; background: #e2e8f0; }
+
+.route-result { background: #f8fdf8; border-radius: 12px; padding: 20px; }
+.route-result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.route-result-header h4 { margin: 0; }
+.route-total-time { background: #2d6a4f; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
+
+.route-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.route-step { display: flex; align-items: flex-start; gap: 12px; background: white; border-radius: 10px; padding: 12px 16px; }
+.route-step-num { width: 28px; height: 28px; border-radius: 50%; background: #2d6a4f; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+.route-step-info { flex: 1; }
+.route-step-info p { margin: 4px 0 0; font-size: 0.85rem; color: #666; }
+.route-tip-hint { font-size: 0.8rem; color: #16a34a; }
+.route-step-time { font-size: 0.8rem; color: #888; white-space: nowrap; }
+
+.route-tips-box { background: #fff3cd; border-radius: 10px; padding: 12px 16px; }
+.route-tips-box p { margin: 0 0 8px; font-size: 0.9rem; }
+.route-tips-box ul { margin: 0; padding-left: 16px; font-size: 0.85rem; }
+
+.earnings-result { display: flex; flex-direction: column; gap: 16px; }
+.earnings-forecast-banner { background: #2d6a4f; color: white; border-radius: 12px; padding: 16px 20px; }
+.earnings-forecast-banner span { font-size: 0.85rem; opacity: 0.8; }
+.earnings-forecast-banner p { margin: 6px 0 0; font-size: 1rem; }
+
+.earnings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.earnings-panel { background: #f8fdf8; border-radius: 12px; padding: 16px; }
+.earnings-panel h4 { margin: 0 0 10px; font-size: 0.95rem; }
+.earnings-list { margin: 0; padding-left: 16px; font-size: 0.9rem; }
+.earnings-list li { margin-bottom: 6px; }
+
+.earnings-tips-section { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; }
+.earnings-tips-section h4 { margin: 0 0 12px; }
+.earnings-tips-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.earnings-tip-item { display: flex; gap: 12px; align-items: flex-start; font-size: 0.9rem; }
+.tip-num { width: 24px; height: 24px; border-radius: 50%; background: #52b788; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
+
+.performance-summary { background: #f0f7f4; border-radius: 12px; padding: 16px; }
+.performance-summary h4 { margin: 0 0 8px; }
+.performance-summary p { margin: 0; font-size: 0.9rem; color: #1b4332; }
+
+@media (max-width: 640px) { .earnings-grid { grid-template-columns: 1fr; } .delivery-ai-header { flex-direction: column; } }

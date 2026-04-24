@@ -16,9 +16,12 @@ const LoginPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await login(form.email, form.password);
-      toast.success('Welcome back! 🌿');
-      navigate('/');
+      const user = await login(form.email, form.password);
+      toast.success('Welcome back, ' + user.name + '! 🌿');
+      if (user.role === 'admin') navigate('/admin');
+      else if (user.role === 'retailer') navigate('/retailer');
+      else if (user.role === 'delivery') navigate('/delivery');
+      else navigate('/');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed');
     } finally { setLoading(false); }
@@ -40,8 +43,7 @@ const LoginPage = () => {
           <div className="form-group">
             <label>Password</label>
             <div className="password-wrapper">
-              <input type={showPassword ? 'text' : 'password'}
-                placeholder="••••••••" required
+              <input type={showPassword ? 'text' : 'password'} placeholder="••••••••" required
                 value={form.password} onChange={e => setForm({...form, password: e.target.value})} />
               <button type="button" className="eye-btn" onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? <EyeClosed /> : <EyeOpen />}

@@ -172,3 +172,23 @@
   .cart-item { flex-wrap: wrap; }
   .cart-summary { position: static; }
 }
+
+/* AI Cart Insights */
+.ai-cart-insights { margin-top: 24px; padding: 16px; }
+.ai-insights-title { font-weight: 700; font-size: 1rem; margin: 0 0 12px; color: #2d6a4f; }
+.ai-cart-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+.ai-cart-tabs button { padding: 7px 16px; border: 2px solid #e2e8f0; border-radius: 8px; background: white; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+.ai-cart-tabs button.active { border-color: #2d6a4f; background: #2d6a4f; color: white; }
+.ai-cart-tabs button:disabled { opacity: 0.6; }
+.ai-cart-content { display: flex; flex-direction: column; gap: 12px; }
+.recipe-card { background: #f8fdf8; border-radius: 10px; padding: 14px; border: 1px solid #d1e8d1; }
+.recipe-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.recipe-meta { font-size: 0.75rem; color: #888; }
+.recipe-uses { font-size: 0.8rem; color: #2d6a4f; margin: 4px 0; }
+.recipe-missing { font-size: 0.8rem; color: #f4845f; margin: 4px 0; }
+.recipe-steps { margin: 8px 0 0; padding-left: 16px; font-size: 0.85rem; color: #555; }
+.freshness-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; }
+.freshness-name { flex: 1; font-weight: 600; }
+.freshness-days { color: #2d6a4f; white-space: nowrap; }
+.freshness-tip { color: #555; flex: 2; }
+.freshness-general { margin-top: 12px; font-size: 0.85rem; color: #2d6a4f; background: #f0f7f4; padding: 10px 14px; border-radius: 8px; }

@@ -1,22 +1,8 @@
-const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const dotenv = require('dotenv');
-
 dotenv.config();
 
-const app = express();
-
-app.use(cors({
-  origin: '*',
-  credentials: false
-}));
-app.use(express.json());
-
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/products', require('./routes/products'));
-app.use('/api/orders', require('./routes/orders'));
-app.use('/api/payment', require('./routes/payment'));
+const app = require('./app');
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB Connected'))

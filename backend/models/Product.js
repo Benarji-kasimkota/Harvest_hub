@@ -15,7 +15,8 @@ const productSchema = new mongoose.Schema({
   farmer: { type: String, default: 'Local Farm' },
   rating: { type: Number, default: 0 },
   numReviews: { type: Number, default: 0 },
-  featured: { type: Boolean, default: false }
+  featured: { type: Boolean, default: false },
+  retailer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

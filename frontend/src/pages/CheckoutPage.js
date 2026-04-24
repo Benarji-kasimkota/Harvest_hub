@@ -4,6 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from '../utils/axios';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import AddressAutocomplete from '../components/common/AddressAutocomplete';
 import toast from 'react-hot-toast';
 import './CheckoutPage.css';
@@ -14,6 +15,7 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const { items, totalPrice, clearCart } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState({
@@ -49,7 +51,7 @@ const CheckoutForm = () => {
       };
       const { data: order } = await axios.post('/api/orders', orderData);
       await axios.put(`/api/orders/${order._id}/pay`, {
-        id: result.paymentIntent.id, status: result.paymentIntent.status, email: 'customer@example.com'
+        id: result.paymentIntent.id, status: result.paymentIntent.status, email: user?.email || ''
       });
       clearCart();
       toast.success('Order placed! 🎉');
@@ -77,7 +79,7 @@ const CheckoutForm = () => {
           </div>
           <div className="checkout-section card">
             <h3>💳 Payment Details</h3>
-            <p className="stripe-note">🔒 Secured by Stripe — Test: 4242 4242 4242 4242</p>
+            <p className="stripe-note">🔒 Secured by Stripe</p>
             <div className="card-element-wrapper">
               <CardElement options={{ style: { base: { fontSize: '16px', color: '#1b1b1b', fontFamily: 'DM Sans, sans-serif', '::placeholder': { color: '#adb5bd' } } } }} />
             </div>

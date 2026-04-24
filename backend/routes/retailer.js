@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const { getMyProducts, addProduct, updateProduct, deleteProduct, getDashboard } = require('../controllers/retailerController');
+const { protect, retailer } = require('../middleware/auth');
+const { validators } = require('../middleware/validate');
+router.use(protect, retailer);
+router.get('/dashboard', getDashboard);
+router.get('/products', getMyProducts);
+router.post('/products', validators.createProduct, addProduct);
+router.put('/products/:id', validators.updateProduct, updateProduct);
+router.delete('/products/:id', deleteProduct);
+module.exports = router;

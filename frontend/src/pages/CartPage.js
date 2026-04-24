@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import axios from '../utils/axios';
 import toast from 'react-hot-toast';
 import './CartPage.css';
 
@@ -10,6 +11,71 @@ const TrashIcon = () => (
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
   </svg>
 );
+
+const AICartInsights = ({ items }) => {
+  const [tab, setTab] = useState(null);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState('');
+
+  const fetchInsight = async (type) => {
+    if (data[type]) { setTab(type); return; }
+    setLoading(type);
+    try {
+      const endpoint = type === 'recipes' ? '/api/ai/recipes' : '/api/ai/freshness';
+      const res = await axios.post(endpoint, { items });
+      setData(prev => ({ ...prev, [type]: res.data }));
+      setTab(type);
+    } catch (err) {
+      if (err.response?.data?.demo) toast.error('AI key not configured yet');
+      else toast.error('Failed to load AI insights');
+    } finally { setLoading(''); }
+  };
+
+  return (
+    <div className="ai-cart-insights card">
+      <p className="ai-insights-title">✨ AI Cart Insights</p>
+      <div className="ai-cart-tabs">
+        <button className={tab === 'recipes' ? 'active' : ''} onClick={() => fetchInsight('recipes')} disabled={loading === 'recipes'}>
+          {loading === 'recipes' ? '...' : '🍳 Recipe Ideas'}
+        </button>
+        <button className={tab === 'freshness' ? 'active' : ''} onClick={() => fetchInsight('freshness')} disabled={loading === 'freshness'}>
+          {loading === 'freshness' ? '...' : '🌿 Freshness Guide'}
+        </button>
+      </div>
+
+      {tab === 'recipes' && data.recipes && (
+        <div className="ai-cart-content">
+          {data.recipes.recipes?.map((r, i) => (
+            <div key={i} className="recipe-card">
+              <div className="recipe-header">
+                <strong>{r.name}</strong>
+                <span className="recipe-meta">{r.cookTime} · {r.difficulty}</span>
+              </div>
+              <p className="recipe-uses">Uses: {r.usesFromCart?.join(', ')}</p>
+              {r.missingIngredients?.length > 0 && (
+                <p className="recipe-missing">+ Need: {r.missingIngredients.join(', ')}</p>
+              )}
+              <ol className="recipe-steps">{r.steps?.slice(0,3).map((s,j) => <li key={j}>{s}</li>)}</ol>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {tab === 'freshness' && data.freshness && (
+        <div className="ai-cart-content">
+          {data.freshness.items?.map((item, i) => (
+            <div key={i} className="freshness-row">
+              <span className="freshness-name">{item.name}</span>
+              <span className="freshness-days">🗓 {item.shelfLifeDays} days</span>
+              <span className="freshness-tip">{item.storageMethod}</span>
+            </div>
+          ))}
+          {data.freshness.generalTip && <p className="freshness-general">💡 {data.freshness.generalTip}</p>}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const CartPage = () => {
   const { items, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
@@ -62,6 +128,7 @@ const CartPage = () => {
           <button onClick={() => { clearCart(); toast.success('Cart cleared!'); }} className="btn-outline clear-btn">
             🗑️ Clear Cart
           </button>
+          {isAuthenticated && <AICartInsights items={items} />}
         </div>
         <div className="cart-summary card">
           <h3>Order Summary</h3>
